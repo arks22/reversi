@@ -3,7 +3,7 @@
 A reversi app like GUI using ncurses that runs on CUI.
 
 
-# Installation
+## Installation
 
 ### OSX
 
@@ -16,13 +16,13 @@ brew install arks22/reversi/reversi
 
 Plese Download exec file from the [release](https://github.com/arks22/reversi/releases) page.
 
-# Usage
+## Usage
 
 ```
 $ revesi
 ```
 
-# ScreenShot
+## ScreenShot
  
 ![ScreenShot](https://raw.githubusercontent.com/arks22/reversi/master/screenShot.png)
 
