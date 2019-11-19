@@ -34,9 +34,11 @@ public:
   bool isPass();
   bool isTurnOver(Board board, int x, int y);
   bool isOver(Board board);
-  bool isCurrentPlayerHuman();
+  bool isPlayerHuman(int color);
+  bool getIsBlackHuman();
+  bool getIsWhiteHuman();
 
-  int getCurrentPlayerLevel();
+  int getComputerLevel(int color);
   int getTurnCount();
   int getCurrentColor();
   int getBoardsNumber();
@@ -53,6 +55,7 @@ public:
   double getWhiteTime();
 
   void remember(Board board);
+
 private:
   void forget();
 

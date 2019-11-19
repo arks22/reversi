@@ -225,8 +225,8 @@ int Game::getTurnCount(){
   return turnCount;
 }
 
-int Game::getCurrentPlayerLevel(){
-  if(currentColor == -1){
+int Game::getComputerLevel(int color){
+  if(color == -1){
     return blackLevel;
   }else{
     return whiteLevel;
@@ -273,20 +273,19 @@ bool Game::isTurnOver(Board board, int x, int y){
   }else if(board.isLegal(x,y,currentColor)){
     return true;
   }else{
-    mvprintw(16, centerWidth - 19, "WARNING: You can't put it there.");
+    mvprintw(17, centerWidth - 19, "WARNING: You can't put it there.");
     return false;
   }
 }
 
 
-bool Game::isCurrentPlayerHuman(){
-  if(currentColor == -1){
+bool Game::isPlayerHuman(int color){
+  if(color == -1){
     return isBlackHuman;
   }else{
     return isWhiteHuman;
   }
 }
-
 
 void Game::gameOver(Board board){
   string winner;

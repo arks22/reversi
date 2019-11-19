@@ -24,6 +24,6 @@ $ revesi
 
 ## ScreenShot
  
-![ScreenShot](https://raw.githubusercontent.com/arks22/reversi/master/screenShot.png)
+![ScreenShot](https://raw.githubusercontent.com/arks22/reversi/master/lib/screenShot.png)
 
 

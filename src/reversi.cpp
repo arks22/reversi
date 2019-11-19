@@ -61,12 +61,12 @@ int main(){
       continue;
     }
 
-    if(game.getTurnCount() > 1) mvprintw(16, centerWidth - 19, "Previous player putted %c%d",alphabet[x-1],y);
+    if(game.getTurnCount() > 1) mvprintw(17, centerWidth - 19, "Previous player putted %c%d",alphabet[x-1],y);
 
     do{
       game.remember(board);
 
-      if(game.isCurrentPlayerHuman()){
+      if(game.isPlayerHuman(game.getCurrentColor())){
         humanMove(board, game.getCurrentColor(), x,y);
 
         //UNDO,REDO機能
@@ -75,8 +75,8 @@ int main(){
             if(game.getTurnCount() > 2){
               board = game.undo();
             }else{
-              mvprintw(16,centerWidth - 19, "WARNING: Cannot UNDO");
-              mvprintw(17,centerWidth - 19, "Press any key to continue");
+              mvprintw(17,centerWidth - 19, "WARNING: Cannot UNDO");
+              mvprintw(18,centerWidth - 19, "Press any key to continue");
               refresh();
               getch();
             }
@@ -84,8 +84,8 @@ int main(){
             if(game.getBoardsNumber() - game.getTurnCount() >= 2){
               board = game.redo();
             }else{
-              mvprintw(16,centerWidth - 19, "WARNING: Cannot REDO");
-              mvprintw(17,centerWidth - 19, "Press any key to continue");
+              mvprintw(17,centerWidth - 19, "WARNING: Cannot REDO");
+              mvprintw(18,centerWidth - 19, "Press any key to continue");
               refresh();
               getch();
             }
@@ -93,7 +93,7 @@ int main(){
           drowTable(game, board, game.getCurrentColor());
         }
       }else{
-        computerMove(game.getCurrentPlayerLevel(), board, game.getCurrentColor(), game.getTurnCount(), x, y);
+        computerMove(game.getComputerLevel(game.getCurrentColor()), board, game.getCurrentColor(), game.getTurnCount(), x, y);
       }
     }while(!game.isTurnOver(board,x,y));
 
@@ -212,18 +212,40 @@ void drowTable(Game game, Board board, int currentColor){ //盤面を描画す�
   }
   attron(COLOR_PAIR(DEFAULT));
 
+  /*
   for(int i=4; i<15; i++){
     mvprintw(i,centerWidth + 3, "│"); //tatesenn
   }
+  */
 
-  mvprintw(6, centerWidth + 8, "○: %d", board.countStone(-1)); 
-  mvprintw(7, centerWidth + 8, "●: %d", board.countStone(1));
+  string blackTitleLine = "BLACK(";
+  string whiteTitleLine = "WHITE(";
+  if(game.isPlayerHuman(-1)){
+    blackTitleLine += "You)────────────│";
+  }else{
+    blackTitleLine += "Lv." + to_string(game.getComputerLevel(-1)) + " computer)──│";
+  }
+  if(game.isPlayerHuman(1)){
+    whiteTitleLine += "You)────────────│";
+  }else{
+    whiteTitleLine += "Lv." + to_string(game.getComputerLevel(1)) + " computer)──│";
+  }
 
-  mvprintw(9, centerWidth + 8, "Time:");
-  mvprintw(10, centerWidth + 9, "Black:%5.0lf(s)", game.getBlackTime()); 
-  mvprintw(11, centerWidth + 9, "White:%5.0lf(s)", game.getWhiteTime());
+  mvprintw(4, centerWidth + 4, blackTitleLine.c_str());
+  mvprintw(5, centerWidth + 4, "│                     │");
+  mvprintw(6, centerWidth + 4, "│  ○: %d               │", board.countStone(-1)); 
+  mvprintw(7, centerWidth + 4, "│  Time:%5.0lf(s)      │", game.getBlackTime()); 
+  mvprintw(8, centerWidth + 4, "│─────────────────────│");
 
-  mvprintw(13, centerWidth + 8, "Turn: %s", (currentColor == -1 ? "○" : "●"));
+
+  mvprintw(10, centerWidth + 4, whiteTitleLine.c_str());
+  mvprintw(11, centerWidth + 4, "│                     │");
+  mvprintw(12, centerWidth + 4, "│  ●: %d               │", board.countStone(1));
+  mvprintw(13, centerWidth + 4, "│  Time:%5.0lf(s)      │", game.getWhiteTime());
+  mvprintw(14, centerWidth + 4, "│─────────────────────│");
+
+
+  mvprintw(16, centerWidth - 12, "Turn: %s", (currentColor == -1 ? "○" : "●"));
 
   refresh();
 }
