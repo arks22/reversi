@@ -5,7 +5,7 @@ A reversi app like GUI using ncurses that runs on CUI.
 
 ## Installation
 
-### OSX
+### macOS
 
 ```
 brew tap arks22/reversi
