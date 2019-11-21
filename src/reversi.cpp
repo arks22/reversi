@@ -42,7 +42,7 @@ int eval(Board board, int color);
 int windowHight, windowWidth; //画面サイズのグローバル変数
 int centerWidth;
 
-char alphabet[9] = "ABCDEFG";
+char alphabet[9] = "ABCDEFGH";
 
 int main(){
   Board board;
@@ -233,14 +233,14 @@ void drowTable(Game game, Board board, int currentColor){ //盤面を描画す�
 
   mvprintw(4, centerWidth + 4, blackTitleLine.c_str());
   mvprintw(5, centerWidth + 4, "│                     │");
-  mvprintw(6, centerWidth + 4, "│  ○: %d               │", board.countStone(-1)); 
+  mvprintw(6, centerWidth + 4, "│     ○: %2d           │", board.countStone(-1)); 
   mvprintw(7, centerWidth + 4, "│  Time:%5.0lf(s)      │", game.getBlackTime()); 
   mvprintw(8, centerWidth + 4, "│─────────────────────│");
 
 
   mvprintw(10, centerWidth + 4, whiteTitleLine.c_str());
   mvprintw(11, centerWidth + 4, "│                     │");
-  mvprintw(12, centerWidth + 4, "│  ●: %d               │", board.countStone(1));
+  mvprintw(12, centerWidth + 4, "│     ●: %2d           │", board.countStone(1));
   mvprintw(13, centerWidth + 4, "│  Time:%5.0lf(s)      │", game.getWhiteTime());
   mvprintw(14, centerWidth + 4, "│─────────────────────│");
 

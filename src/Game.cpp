@@ -299,7 +299,6 @@ void Game::gameOver(Board board){
   mvprintw(17,centerWidth - 22,"---------------- GAME OVER ----------------");
   mvprintw(19,centerWidth - 7,"%s WINS", winner.c_str());
   mvprintw(21,centerWidth - 11,"Press any key to exit");
-  mvprintw(13, centerWidth + 8, "          ");
   mvprintw(4,centerWidth - 15,"                   ");
   int key = getch();
   endwin();

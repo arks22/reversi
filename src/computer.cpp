@@ -35,13 +35,12 @@ void computerMove(int strength, Board board, int computerColor, int turnCount, i
   for(int i=0; i<moveVectorSize; i++){
     Board hypoBoard = board;
     hypoBoard.putStone(moveVector.at(i).at(0), moveVector.at(i).at(1), computerColor); //仮に手を打つ
-    if(turnCount < 52){
+    if(turnCount < 54 - strength){//レベルが高いほど全探索するのが早くなる
       score = minimax(hypoBoard, limitDepth, computerColor * -1, false );//minimaxで探索
     }else{
       score = fullSearch(hypoBoard, computerColor * -1, false); //全探索
     }
 
-    //cout << "eval:" << score << " ,";
     if(score > maxScore){
       maxScore = score;
       move = moveVector.at(i);
@@ -66,7 +65,6 @@ int minimax(Board board, int limitDepth, int color, bool isMyTurn){
     moveVectorSize = moveVector.size();
 
     if(moveVectorSize == 0){//もう一回パス(game over)だったら
-      //cout << "o";
       int winner = board.getVictory();
       if(isMyTurn){
         return (winner == color) ? 10000 : -10000;//自分のターンの場合、勝者=ターンプレイヤーなら勝利
@@ -76,7 +74,7 @@ int minimax(Board board, int limitDepth, int color, bool isMyTurn){
     }
   }
 
-  if(limitDepth == 0){
+  if(limitDepth <= 0){
     return isMyTurn ? eval(board, color) : eval(board, color * -1); //自分の盤面として評価させる(自分のターンんでなければ反転)　
   }
 
@@ -109,7 +107,6 @@ int fullSearch(Board board, int color, bool isMyTurn){ //全探索
     moveVectorSize = moveVector.size();
 
     if(moveVectorSize == 0){//もう一回パス(game over)だったら石の数をreturn
-      //cout << "count:" << board.countStone(color); 
       return board.countStone(color);
     }
 
@@ -135,14 +132,14 @@ int fullSearch(Board board, int color, bool isMyTurn){ //全探索
 
 int eval(Board board, int color){ //盤面を評価する関数
   vector<vector<int>> scoreVector = {
-    { 50,-30, 4,-3,-3, 4,-30, 50},
+    { 80,-30, 8,-3,-3, 8,-30, 80},
     {-30,-25,-1,-5,-5,-1,-25,-30},
-    { 4, -1,  2,-1,-1, 2,-1,  4},
+    { 8, -1,  2,-1,-1, 2,-1,  8},
     {-3, -5, -1, 0, 0,-1,-5, -3},
     {-3, -5, -1, 0, 0,-1,-5, -3},
-    { 4, -1,  2,-1,-1, 2,-1,  4},
+    { 8, -1,  2,-1,-1, 2,-1,  8},
     {-30,-25,-1,-5,-5,-1,-25,-30},
-    { 50,-30, 4,-3,-3, 4,-30, 50},
+    { 80,-30, 8,-3,-3, 8,-30, 80},
   };
   vector<vector<int>> boardVector = board.getBoardVector();
   int score = 0;
@@ -154,6 +151,8 @@ int eval(Board board, int color){ //盤面を評価する関数
       //白の評価値を出す場合はscore*1*1 = score, 黒の場合はscore*(-1)*(-1) = score
     }
   }
-  //cout << ".";
+
+  score += (board.getLegalMove(color).size() - board.getLegalMove(color * -1).size()) * 5; //着手可能数を評価
+
   return score;
 }
