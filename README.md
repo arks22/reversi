@@ -19,7 +19,7 @@ Plese Download exec file from the [release](https://github.com/arks22/reversi/re
 ## Usage
 
 ```
-$ revesi
+$ reversi
 ```
 
 ## ScreenShot
